@@ -49,3 +49,22 @@ then
 
 fi
 	
+bookkeeping="/var/www/html"
+# Check if inventory file exists
+if [[ ! -f ${bookkeeping}/inventory.html ]]; 
+then
+	echo -e 'Log Type\t-\tTime Created\t-\tType\t-\tSize' > ${bookkeeping}/inventory.html
+fi
+
+# Inserting Logs into the file
+if [[ -f ${bookkeeping}/inventory.html ]]; then
+    size=$(du -h /tmp/${name}-httpd-logs-${timestamp}.tar | awk '{print $1}')
+	echo -e "httpd-logs\t-\t${timestamp}\t-\ttar\t-\t${size}" >> ${bookkeeping}/inventory.html
+fi
+
+# Creating a cron job that runs service every minutes/day
+if [[ ! -f /etc/cron.d/automation ]]; 
+then
+	echo "0 0 * * * /root/Automation_Project/automation.sh" >> /etc/cron.d/automation
+fi
+	
