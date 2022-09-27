@@ -62,7 +62,8 @@ if [[ -f ${bookkeeping}/inventory.html ]]; then
 	echo -e "httpd-logs\t-\t${timestamp}\t-\ttar\t-\t${size}" >> ${bookkeeping}/inventory.html
 fi
 
-# Creating a cron job that runs service every minutes/day
+# Creating a cron job that runs service in interval of 1 day
+
 if [[ ! -f /etc/cron.d/automation ]]; 
 then
 	echo "0 0 * * * /root/Automation_Project/automation.sh" >> /etc/cron.d/automation
